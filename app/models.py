@@ -46,12 +46,8 @@ class Master(models.Model):
         ('makeup', '💄 Визаж'),
     ]
     
-    user = models.OneToOneField(
-        User, 
-        on_delete=models.CASCADE, 
-        verbose_name="Пользователь",
-        related_name='master_profile'
-    )
+    first_name = models.CharField(max_length=100, verbose_name="Имя")
+    last_name = models.CharField(max_length=100, verbose_name="Фамилия", blank=True)
     specialization = models.CharField(
         max_length=50, 
         choices=SPECIALIZATION_CHOICES, 
@@ -122,7 +118,7 @@ class Master(models.Model):
     )
     
     def __str__(self):
-        return f"{self.user.get_full_name()} - {self.get_specialization_display()}"
+        return f"{self.first_name} {self.last_name} - {self.get_specialization_display()}"
     
     def get_photo(self):
         """Возвращает фото - сначала из файла, потом по ссылке"""
@@ -132,13 +128,8 @@ class Master(models.Model):
             return self.photo_url
         return None
     
-    def get_absolute_url(self):
-        return reverse('admin:booking_master_change', args=[self.id])
-    
     def get_full_name(self):
-        return self.user.get_full_name()
-    
-    get_full_name.short_description = "Полное имя"
+        return f"{self.first_name} {self.last_name}".strip()
     
     def get_services_count(self):
         return self.services.count()
@@ -148,7 +139,7 @@ class Master(models.Model):
     class Meta:
         verbose_name = "Мастер"
         verbose_name_plural = "Мастера"
-        ordering = ['display_order', 'user__first_name']
+        ordering = ['display_order', 'first_name']
 
 class MasterSchedule(models.Model):
     DAYS_OF_WEEK = [

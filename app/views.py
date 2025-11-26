@@ -25,15 +25,13 @@ def service_list(request):
     return JsonResponse(data, safe=False)
 
 def master_list(request):
-    masters = Master.objects.filter(is_active=True).select_related('user').prefetch_related('services')
+    masters = Master.objects.filter(is_active=True).prefetch_related('services')
     data = []
     for master in masters:
         data.append({
             'id': master.id,
-            'user': {
-                'first_name': master.user.first_name,
-                'last_name': master.user.last_name
-            },
+            'first_name': master.first_name,
+            'last_name': master.last_name,
             'specialization': master.get_specialization_display(),
             'specialization_code': master.specialization,
             'photo': master.get_photo(),
@@ -51,10 +49,8 @@ def master_detail(request, master_id):
         master = Master.objects.get(id=master_id, is_active=True)
         data = {
             'id': master.id,
-            'user': {
-                'first_name': master.user.first_name,
-                'last_name': master.user.last_name
-            },
+            'first_name': master.first_name,
+            'last_name': master.last_name,
             'specialization': master.get_specialization_display(),
             'photo': master.get_photo(),
             'experience': master.experience,
@@ -85,6 +81,7 @@ def create_booking(request):
         try:
             data = json.loads(request.body)
             
+            # Проверяем доступность времени
             existing_booking = Booking.objects.filter(
                 master_id=data['master'],
                 date=data['date'],

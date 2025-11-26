@@ -32,7 +32,7 @@ class MasterAdmin(admin.ModelAdmin):
     list_display_links = ['photo_preview', 'get_full_name']
     list_filter = ['specialization', 'is_active', 'experience']
     list_editable = ['display_order', 'is_active', 'rating']
-    search_fields = ['user__first_name', 'user__last_name', 'user__email', 'specialization']
+    search_fields = ['first_name', 'last_name', 'specialization']
     readonly_fields = ['photo_preview_large', 'photo_url_preview']
     filter_horizontal = ['services']
     inlines = [MasterScheduleInline, ServicesInline]
@@ -40,7 +40,8 @@ class MasterAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Основная информация', {
             'fields': (
-                'user', 
+                'first_name',
+                'last_name',
                 'specialization', 
                 'experience',
                 'rating',
@@ -79,6 +80,10 @@ class MasterAdmin(admin.ModelAdmin):
         return obj.get_specialization_display()
     specialization_display.short_description = 'Специализация'
     
+    def get_full_name(self, obj):
+        return f"{obj.first_name} {obj.last_name}".strip()
+    get_full_name.short_description = 'Полное имя'
+    
     def photo_preview(self, obj):
         photo_url = obj.get_photo()
         if photo_url:
@@ -114,11 +119,12 @@ class MasterAdmin(admin.ModelAdmin):
     photo_url_preview.short_description = 'Предпросмотр фото по ссылке'
     photo_url_preview.allow_tags = True
     
-    def get_queryset(self, request):
-        return super().get_queryset(request).select_related('user')
+    def get_services_count(self, obj):
+        return obj.services.count()
+    get_services_count.short_description = 'Кол-во услуг'
     
-    def save_model(self, request, obj, form, change):
-        super().save_model(request, obj, form, change)
+    def get_queryset(self, request):
+        return super().get_queryset(request)
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
@@ -219,21 +225,6 @@ class BookingAdmin(admin.ModelAdmin):
     readonly_fields = ['created_at', 'updated_at']
     date_hierarchy = 'date'
 
-class MasterInline(admin.StackedInline):
-    model = Master
-    can_delete = False
-    verbose_name_plural = 'Профиль мастера'
-    fk_name = 'user'
-    fields = ['specialization', 'experience', 'rating', 'is_active']
-
-class CustomUserAdmin(UserAdmin):
-    inlines = [MasterInline]
-    list_display = UserAdmin.list_display + ('is_master',)
-    
-    def is_master(self, obj):
-        return hasattr(obj, 'master_profile')
-    is_master.boolean = True
-    is_master.short_description = 'Мастер'
-
-admin.site.unregister(User)
-admin.site.register(User, CustomUserAdmin)
+# Убираем связь с User так как у нас теперь отдельная модель Master
+# admin.site.unregister(User)
+# admin.site.register(User, CustomUserAdmin)
