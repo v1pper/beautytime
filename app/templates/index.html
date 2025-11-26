@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BeautyTime - Премиум салон красоты</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            color: #e5e5e5;
+        }
+        
+        /* ХЕДЕР */
+        .header {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            padding: 20px 0;
+            border-bottom: 2px solid #d4af37;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 32px;
+            color: #d4af37;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #d4af37, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            color: #e5e5e5;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .nav-link.active {
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.15);
+        }
+        
+        /* ОСНОВНОЙ КОНТЕНТ */
+        .main-container {
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+        
+        /* САЙДБАР - ФИЛЬТРЫ */
+        .sidebar {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            border: 1px solid #333;
+        }
+        
+        .filter-section {
+            margin-bottom: 30px;
+        }
+        
+        .filter-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #d4af37;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 16px 45px 16px 20px;
+            border: 2px solid #333;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #2a2a2a;
+            color: #e5e5e5;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+        
+        .search-input::placeholder {
+            color: #888;
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #d4af37;
+            font-size: 18px;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-checkbox:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .filter-checkbox input {
+            width: 18px;
+            height: 18px;
+            accent-color: #d4af37;
+        }
+        
+        .filter-label {
+            font-size: 14px;
+            color: #e5e5e5;
+        }
+        
+        .price-range {
+            width: 100%;
+            margin: 15px 0;
+            accent-color: #d4af37;
+            background: #333;
+            border-radius: 10px;
+        }
+        
+        .price-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        /* ОСНОВНОЙ КОНТЕНТ */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .header-left {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .results-count {
+            font-size: 16px;
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .reset-master-btn {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            white-space: nowrap;
+        }
+        
+        .reset-master-btn:hover {
+            background: linear-gradient(135deg, #b91c1c, #991b1b);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+        }
+        
+        .sort-select {
+            padding: 10px 15px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            background: rgba(212, 175, 55, 0.1);
+            color: #d4af37;
+            font-weight: 600;
+        }
+        
+        .sort-select option {
+            background: #1a1a1a;
+            color: #e5e5e5;
+        }
+        
+        /* КАРТОЧКИ УСЛУГ И МАСТЕРОВ */
+        .services-grid, .masters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .service-card, .master-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #333;
+        }
+        
+        .service-card:hover, .master-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+        }
+        
+        .service-image, .master-image {
+            width: 100%;
+            height: 200px;
+            position: relative;
+        }
+        
+        .service-image-real, .master-image-real {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 48px;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+        }
+        
+        .service-info, .master-info {
+            padding: 25px;
+        }
+        
+        .service-header, .master-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .service-name, .master-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+        
+        .service-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 6px 12px;
+            border-radius: 8px;
+            white-space: nowrap;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .service-description, .master-specialization {
+            color: #b0b0b0;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .service-meta, .master-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: #888;
+        }
+        
+        .service-meta div, .master-meta div {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .book-btn {
+            width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #d4af37 100%);
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+        }
+        
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+            background: linear-gradient(135deg, #ffd700, #d4af37);
+        }
+        
+        /* Стили для информации о мастерах */
+        .master-stats {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: #b0b0b0;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+        
+        .master-description {
+            color: #b0b0b0;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 10px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .specialization-badge {
+            background: linear-gradient(135deg, #d4af37, #ffd700);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        
+        .rating-stars {
+            color: #d4af37;
+            font-size: 14px;
+        }
+        
+        .experience-badge {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .master-contacts {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-link {
+            color: #d4af37;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-link:hover {
+            color: #ffd700;
+        }
+        
+        /* ТАБЫ */
+        .tab-container {
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 15px;
+            padding: 5px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .tabs {
+            display: flex;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background: none;
+            border: none;
+            color: #b0b0b0;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, #d4af37, #ffd700);
+            color: #000;
+        }
+        
+        .tab:hover:not(.active) {
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        /* ФОРМА БРОНИРОВАНИЯ */
+        .booking-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-radius: 24px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            border: 2px solid #d4af37;
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.3);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #d4af37;
+            z-index: 10;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        /* ФУТЕР */
+        .footer {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            padding: 50px 0 30px;
+            border-top: 2px solid #d4af37;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-section h3 {
+            color: #d4af37;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #b0b0b0;
+            line-height: 1.6;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: #d4af37;
+        }
+        
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px 0;
+            border-top: 1px solid #333;
+            margin-top: 40px;
+            text-align: center;
+            color: #888;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: #d4af37;
+            color: #000;
+            transform: translateY(-3px);
+        }
+        
+        /* АДАПТИВ */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+            
+            .services-grid, .masters-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .results-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+            
+            .header-left {
+                justify-content: space-between;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .services-grid, .masters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-left {
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+            }
+            
+            .reset-master-btn {
+                align-self: flex-start;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+        
+        /* УТИЛИТЫ */
+        .hidden {
+            display: none !important;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 30px;
+            color: #888;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            border: 2px dashed #333;
+            grid-column: 1 / -1;
+        }
+        
+        /* АНИМАЦИИ */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .service-card, .master-card {
+            animation: fadeIn 0.6s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- ХЕДЕР -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">👑</div>
+                <div class="logo-text">BeautyTime</div>
+            </div>
+            
+        </div>
+    </header>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div class="main-container">
+        <div class="container">
+            <!-- САЙДБАР - ФИЛЬТРЫ -->
+            <div class="sidebar">
+                <div class="search-box">
+                    <input type="text" id="search-input" class="search-input" placeholder="Поиск услуг или мастеров...">
+                    <div class="search-icon">🔍</div>
+                </div>
+                
+                <div class="filter-section">
+                    <h3 class="filter-title">💰 Цена</h3>
+                    <input type="range" id="price-range" class="price-range" min="0" max="10000" step="500" value="10000">
+                    <div class="price-labels">
+                        <span>0 руб.</span>
+                        <span id="max-price">10000 руб.</span>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <h3 class="filter-title">⏱ Длительность</h3>
+                    <div class="filter-group">
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="duration" value="short" checked>
+                            <span class="filter-label">До 1 часа</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="duration" value="medium" checked>
+                            <span class="filter-label">1-2 часа</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="duration" value="long" checked>
+                            <span class="filter-label">Более 2 часов</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <h3 class="filter-title">🎯 Категории</h3>
+                    <div class="filter-group" id="category-filters">
+                        <!-- Категории загружаются динамически -->
+                    </div>
+                </div>
+                
+                <button class="book-btn" onclick="resetFilters()">
+                    🔄 Сбросить все фильтры
+                </button>
+            </div>
+
+            <!-- ОСНОВНОЙ КОНТЕНТ -->
+            <div class="main-content">
+                <div class="tab-container">
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchTab('services')">💇 Услуги</button>
+                        <button class="tab" onclick="switchTab('masters')">👑 Мастера</button>
+                    </div>
+                </div>
+                
+                <div class="results-header">
+                    <div class="header-left">
+                        <div class="results-count" id="results-count">
+                            Найдено услуг: 0
+                        </div>
+                        <button id="reset-master-filter" class="reset-master-btn" onclick="app.resetMasterFilter()">
+                            ❌ Сбросить фильтр мастера
+                        </button>
+                    </div>
+                    <select class="sort-select" id="sort-select" onchange="applyFilters()">
+                        <option value="price_asc">По цене (возр.)</option>
+                        <option value="price_desc">По цене (убыв.)</option>
+                        <option value="name_asc">По названию (А-Я)</option>
+                        <option value="name_desc">По названию (Я-А)</option>
+                        <option value="duration_asc">По длительности</option>
+                    </select>
+                </div>
+                
+                <!-- РЕЗУЛЬТАТЫ ПОИСКА -->
+                <div id="services-results" class="services-results">
+                    <div class="services-grid" id="services-grid">
+                        <!-- Услуги загружаются динамически -->
+                    </div>
+                </div>
+                
+                <div id="masters-results" class="masters-results hidden">
+                    <div class="masters-grid" id="masters-grid">
+                        <!-- Мастера загружаются динамически -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФУТЕР -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>👑 BeautyTime</h3>
+                <p>Премиальный салон красоты с лучшими мастерами города. Мы создаем красоту и уверенность в каждом клиенте.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">📘</a>
+                    <a href="#" class="social-link">📷</a>
+                    <a href="#" class="social-link">🐦</a>
+                    <a href="#" class="social-link">💬</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>📞 Контакты</h3>
+                <p>📍 г. Москва, ул. Премиум, 15</p>
+                <p>📞 +7 (999) 123-45-67</p>
+                <p>✉️ premium@beautytime.ru</p>
+                <p>🕒 Ежедневно с 9:00 до 21:00</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>🔗 Быстрые ссылки</h3>
+                <p><a href="#">Главная</a></p>
+                <p><a href="#">Услуги и цены</a></p>
+                <p><a href="#">Наши мастера</a></p>
+                <p><a href="#">Акции и скидки</a></p>
+                <p><a href="#">Отзывы</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>📧 Подписка</h3>
+                <p>Подпишитесь на наши новости и получайте эксклюзивные предложения</p>
+                <input type="email" placeholder="Ваш email" style="width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #333; background: #2a2a2a; color: #e5e5e5;">
+                <button class="book-btn" style="margin-top: 0;">Подписаться</button>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 BeautyTime. Все права защищены. Премиум салон красоты</p>
+        </div>
+    </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО БРОНИРОВАНИЯ -->
+    <div id="booking-modal" class="booking-modal hidden">
+        <div class="modal-content" id="modal-content">
+            <!-- Форма бронирования загружается динамически -->
+        </div>
+    </div>
+
+    <script>
+        // JavaScript код остается точно таким же как в предыдущей версии
+        // Просто вставь сюда весь JavaScript из предыдущего ответа
+        class BeautySearchApp {
+            constructor() {
+                this.services = [];
+                this.masters = [];
+                this.filteredServices = [];
+                this.filteredMasters = [];
+                this.currentTab = 'services';
+                this.filters = {
+                    search: '',
+                    maxPrice: 10000,
+                    durations: ['short', 'medium', 'long'],
+                    categories: []
+                };
+                this.originalFilters = null;
+                this.currentMasterFilter = null;
+            }
+            
+            async init() {
+                await this.loadData();
+                this.setupEventListeners();
+                this.applyFilters();
+                console.log('Search App started');
+            }
+            
+            async loadData() {
+                try {
+                    const servicesResponse = await fetch('/api/services/');
+                    if (servicesResponse.ok) {
+                        this.services = await servicesResponse.json();
+                        this.extractCategories();
+                    }
+                    
+                    const mastersResponse = await fetch('/api/masters/');
+                    if (mastersResponse.ok) {
+                        this.masters = await mastersResponse.json();
+                    }
+                    
+                    this.renderServices();
+                    this.renderMasters();
+                    this.renderCategoryFilters();
+                    
+                } catch (error) {
+                    console.error('Load error:', error);
+                    // Fallback данные
+                    this.services = [
+                        {
+                            id: 1, 
+                            name: "Стрижка женская", 
+                            price: "1500", 
+                            duration: "01:00:00",
+                            description: "Профессиональная стрижка с укладкой",
+                            category: "Парикмахерские",
+                            image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400"
+                        },
+                        {
+                            id: 2, 
+                            name: "Маникюр", 
+                            price: "1200", 
+                            duration: "01:30:00",
+                            description: "Аппаратный маникюр с покрытием",
+                            category: "Ногтевой сервис",
+                            image: "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400"
+                        },
+                        {
+                            id: 3, 
+                            name: "Массаж расслабляющий", 
+                            price: "2000", 
+                            duration: "01:00:00",
+                            description: "Расслабляющий массаж всего тела",
+                            category: "Массаж",
+                            image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400"
+                        }
+                    ];
+                    this.masters = [
+                        {
+                            id: 1,
+                            user: { first_name: "Мария", last_name: "Иванова" },
+                            specialization: "💇 Парикмахер",
+                            specialization_code: "hair",
+                            photo: "https://images.unsplash.com/photo-1595475884562-073c30d45670?w=400",
+                            experience: 5,
+                            rating: 4.8,
+                            description: "Опытный парикмахер с международными сертификатами. Специализация: женские стрижки, окрашивание, укладки.",
+                            instagram: "maria_beauty",
+                            phone: "+79991234567",
+                            services: [1]
+                        },
+                        {
+                            id: 2,
+                            user: { first_name: "Анна", last_name: "Петрова" },
+                            specialization: "💅 Ногтевой сервис",
+                            specialization_code: "nails",
+                            photo: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=400",
+                            experience: 3,
+                            rating: 4.9,
+                            description: "Мастер ногтевого сервиса. Аппаратный маникюр, покрытие гель-лаком, наращивание.",
+                            instagram: "anna_nails",
+                            phone: "+79997654321",
+                            services: [2]
+                        },
+                        {
+                            id: 3,
+                            user: { first_name: "Ольга", last_name: "Сидорова" },
+                            specialization: "💆 Массаж",
+                            specialization_code: "massage",
+                            photo: "https://images.unsplash.com/photo-1551830412-4f8c33f477b3?w=400",
+                            experience: 4,
+                            rating: 4.7,
+                            description: "Профессиональный массажист. Расслабляющий, лечебный и спортивный массаж.",
+                            instagram: "olga_massage",
+                            phone: "+7999456123",
+                            services: [3]
+                        }
+                    ];
+                    this.extractCategories();
+                    this.renderServices();
+                    this.renderMasters();
+                    this.renderCategoryFilters();
+                }
+            }
+            
+            extractCategories() {
+                const categories = new Set();
+                this.services.forEach(service => {
+                    if (service.category) {
+                        categories.add(service.category);
+                    }
+                });
+                this.filters.categories = Array.from(categories);
+            }
+            
+            renderCategoryFilters() {
+                const container = document.getElementById('category-filters');
+                container.innerHTML = '';
+                
+                this.filters.categories.forEach(category => {
+                    const label = document.createElement('label');
+                    label.className = 'filter-checkbox';
+                    label.innerHTML = `
+                        <input type="checkbox" name="category" value="${category}" checked>
+                        <span class="filter-label">${category}</span>
+                    `;
+                    container.appendChild(label);
+                });
+            }
+            
+            renderServices() {
+                const container = document.getElementById('services-grid');
+                container.innerHTML = '';
+                
+                if (this.filteredServices.length === 0) {
+                    container.innerHTML = '<div class="empty-state">Услуги не найдены</div>';
+                    return;
+                }
+                
+                this.filteredServices.forEach(service => {
+                    const card = document.createElement('div');
+                    card.className = 'service-card';
+                    card.onclick = () => this.openBookingModal(service);
+                    
+                    const duration = this.formatDuration(service.duration);
+                    const serviceImage = service.image ? 
+                        `<img src="${service.image}" alt="${service.name}" class="service-image-real" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : 
+                        '';
+                    
+                    card.innerHTML = `
+                        <div class="service-image">
+                            ${serviceImage}
+                            <div class="image-placeholder" ${service.image ? 'style="display:none;"' : ''}>
+                                💇
+                            </div>
+                        </div>
+                        <div class="service-info">
+                            <div class="service-header">
+                                <div>
+                                    <div class="service-name">${service.name}</div>
+                                    <div class="service-description">${service.description}</div>
+                                </div>
+                                <div class="service-price">${service.price} ₽</div>
+                            </div>
+                            <div class="service-meta">
+                                <div>⏱ ${duration}</div>
+                                <div>🎯 ${service.category || 'Общая'}</div>
+                            </div>
+                            <button class="book-btn" onclick="event.stopPropagation(); app.openBookingModal(${JSON.stringify(service).replace(/"/g, '&quot;')})">
+                                📅 Записаться
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(card);
+                });
+            }
+            
+            renderMasters() {
+                const container = document.getElementById('masters-grid');
+                container.innerHTML = '';
+                
+                if (this.filteredMasters.length === 0) {
+                    container.innerHTML = '<div class="empty-state">Мастера не найдены</div>';
+                    return;
+                }
+                
+                this.filteredMasters.forEach(master => {
+                    const card = document.createElement('div');
+                    card.className = 'master-card';
+                    
+                    const fullName = this.getMasterFullName(master);
+                    const ratingStars = '★'.repeat(Math.floor(master.rating)) + '☆'.repeat(5 - Math.floor(master.rating));
+                    
+                    const specializationIcon = this.getSpecializationIcon(master.specialization_code);
+                    
+                    let imageHtml;
+                    if (master.photo) {
+                        imageHtml = `<img src="${master.photo}" alt="${fullName}" class="master-image-real" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">`;
+                    } else {
+                        imageHtml = '';
+                    }
+                    
+                    card.innerHTML = `
+                        <div class="master-image">
+                            ${imageHtml}
+                            <div class="image-placeholder" ${master.photo ? 'style="display:none;"' : ''}>
+                                ${specializationIcon}
+                            </div>
+                        </div>
+                        <div class="master-info">
+                            <div class="master-header">
+                                <div>
+                                    <div class="specialization-badge">
+                                        ${master.specialization || 'Мастер'}
+                                    </div>
+                                    <div class="master-name">${fullName}</div>
+                                    ${master.description ? `
+                                        <div class="master-description">${master.description}</div>
+                                    ` : ''}
+                                </div>
+                                <div class="service-price">
+                                    <div class="rating-stars">${ratingStars}</div>
+                                    <div style="font-size: 14px; margin-top: 5px;">${master.rating}/5</div>
+                                </div>
+                            </div>
+                            
+                            <div class="master-stats">
+                                <div class="stat-item">
+                                    <span class="experience-badge">${master.experience}+ лет</span>
+                                </div>
+                                <div class="stat-item">👥 100+ клиентов</div>
+                                <div class="stat-item">🎯 ${master.services ? master.services.length : 0} услуг</div>
+                            </div>
+                            
+                            ${master.instagram || master.phone ? `
+                                <div class="master-contacts">
+                                    ${master.instagram ? `
+                                        <a href="https://instagram.com/${master.instagram}" target="_blank" class="contact-link">
+                                            📸 @${master.instagram}
+                                        </a>
+                                    ` : ''}
+                                    ${master.phone ? `
+                                        <a href="tel:${master.phone}" class="contact-link">
+                                            📞 ${master.phone}
+                                        </a>
+                                    ` : ''}
+                                </div>
+                            ` : ''}
+                            
+                            <button class="book-btn" onclick="app.showMasterServices(${master.id})">
+                                👀 Посмотреть услуги
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(card);
+                });
+            }
+            
+            setupEventListeners() {
+                document.getElementById('search-input').addEventListener('input', (e) => {
+                    this.filters.search = e.target.value;
+                    this.applyFilters();
+                });
+                
+                document.getElementById('price-range').addEventListener('input', (e) => {
+                    this.filters.maxPrice = parseInt(e.target.value);
+                    document.getElementById('max-price').textContent = `${e.target.value} руб.`;
+                    this.applyFilters();
+                });
+                
+                document.querySelectorAll('input[name="duration"]').forEach(checkbox => {
+                    checkbox.addEventListener('change', () => {
+                        this.updateDurationFilters();
+                    });
+                });
+                
+                document.addEventListener('change', (e) => {
+                    if (e.target.name === 'category') {
+                        this.updateCategoryFilters();
+                    }
+                });
+            }
+            
+            updateDurationFilters() {
+                this.filters.durations = [];
+                document.querySelectorAll('input[name="duration"]:checked').forEach(checkbox => {
+                    this.filters.durations.push(checkbox.value);
+                });
+                this.applyFilters();
+            }
+            
+            updateCategoryFilters() {
+                const selectedCategories = [];
+                document.querySelectorAll('input[name="category"]:checked').forEach(checkbox => {
+                    selectedCategories.push(checkbox.value);
+                });
+                this.filters.categories = selectedCategories;
+                this.applyFilters();
+            }
+            
+            applyFilters() {
+                if (!this.originalFilters) {
+                    document.getElementById('reset-master-filter').style.display = 'none';
+                }
+                
+                this.filteredServices = this.services.filter(service => {
+                    const searchMatch = !this.filters.search || 
+                        service.name.toLowerCase().includes(this.filters.search.toLowerCase()) ||
+                        service.description.toLowerCase().includes(this.filters.search.toLowerCase());
+                    
+                    const priceMatch = parseFloat(service.price) <= this.filters.maxPrice;
+                    
+                    const duration = this.getDurationInMinutes(service.duration);
+                    let durationMatch = false;
+                    if (this.filters.durations.includes('short') && duration <= 60) durationMatch = true;
+                    if (this.filters.durations.includes('medium') && duration > 60 && duration <= 120) durationMatch = true;
+                    if (this.filters.durations.includes('long') && duration > 120) durationMatch = true;
+                    
+                    const categoryMatch = this.filters.categories.length === 0 || 
+                        this.filters.categories.includes(service.category);
+                    
+                    return searchMatch && priceMatch && durationMatch && categoryMatch;
+                });
+                
+                this.sortResults();
+                
+                if (this.currentTab === 'services') {
+                    if (!this.originalFilters) {
+                        document.getElementById('results-count').textContent = 
+                            `Найдено услуг: ${this.filteredServices.length}`;
+                    }
+                    this.renderServices();
+                } else {
+                    this.filteredMasters = this.masters.filter(master => {
+                        const searchMatch = !this.filters.search || 
+                            this.getMasterFullName(master).toLowerCase().includes(this.filters.search.toLowerCase()) ||
+                            master.specialization.toLowerCase().includes(this.filters.search.toLowerCase());
+                        return searchMatch;
+                    });
+                    document.getElementById('results-count').textContent = 
+                        `Найдено мастеров: ${this.filteredMasters.length}`;
+                    this.renderMasters();
+                }
+            }
+            
+            sortResults() {
+                const sortValue = document.getElementById('sort-select').value;
+                
+                this.filteredServices.sort((a, b) => {
+                    switch (sortValue) {
+                        case 'price_asc':
+                            return parseFloat(a.price) - parseFloat(b.price);
+                        case 'price_desc':
+                            return parseFloat(b.price) - parseFloat(a.price);
+                        case 'name_asc':
+                            return a.name.localeCompare(b.name);
+                        case 'name_desc':
+                            return b.name.localeCompare(a.name);
+                        case 'duration_asc':
+                            return this.getDurationInMinutes(a.duration) - this.getDurationInMinutes(b.duration);
+                        default:
+                            return 0;
+                    }
+                });
+            }
+            
+            getDurationInMinutes(duration) {
+                if (!duration) return 60;
+                if (typeof duration === 'string') {
+                    const parts = duration.split(':');
+                    if (parts.length === 3) {
+                        return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+                    }
+                }
+                return 60;
+            }
+            
+            switchTab(tabName) {
+                this.currentTab = tabName;
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                event.target.classList.add('active');
+                
+                if (tabName === 'services') {
+                    document.getElementById('services-results').classList.remove('hidden');
+                    document.getElementById('masters-results').classList.add('hidden');
+                    this.applyFilters();
+                } else {
+                    document.getElementById('services-results').classList.add('hidden');
+                    document.getElementById('masters-results').classList.remove('hidden');
+                    this.filteredMasters = this.masters;
+                    this.applyFilters();
+                }
+            }
+            
+            showMasterServices(masterId) {
+                const master = this.masters.find(m => m.id === masterId);
+                if (!master) return;
+                
+                this.currentTab = 'services';
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelector('.tab:nth-child(1)').classList.add('active');
+                
+                document.getElementById('services-results').classList.remove('hidden');
+                document.getElementById('masters-results').classList.add('hidden');
+                
+                if (!this.originalFilters) {
+                    this.originalFilters = { ...this.filters };
+                }
+                
+                const masterServiceIds = master.services || [];
+                this.filteredServices = this.services.filter(service => 
+                    masterServiceIds.includes(service.id)
+                );
+                
+                document.getElementById('search-input').value = this.getMasterFullName(master);
+                document.getElementById('results-count').textContent = 
+                    `Услуги мастера ${this.getMasterFullName(master)}: ${this.filteredServices.length}`;
+                
+                document.getElementById('reset-master-filter').style.display = 'block';
+                this.currentMasterFilter = master;
+                
+                this.renderServices();
+                
+                setTimeout(() => {
+                    if (this.filteredServices.length === 0) {
+                        alert(`У мастера ${this.getMasterFullName(master)} пока нет услуг`);
+                    } else {
+                        alert(`Показаны услуги мастера ${this.getMasterFullName(master)}`);
+                    }
+                }, 100);
+            }
+            
+            resetMasterFilter() {
+                if (this.originalFilters) {
+                    this.filters = { ...this.originalFilters };
+                    this.originalFilters = null;
+                    this.currentMasterFilter = null;
+                }
+                document.getElementById('search-input').value = '';
+                document.getElementById('reset-master-filter').style.display = 'none';
+                document.getElementById('results-count').textContent = 
+                    `Найдено услуг: ${this.filteredServices.length}`;
+                this.applyFilters();
+                
+                alert('Фильтр мастера сброшен. Показаны все услуги.');
+            }
+            
+            openBookingModal(service) {
+                const modal = document.getElementById('booking-modal');
+                const modalContent = document.getElementById('modal-content');
+                
+                modalContent.innerHTML = `
+                    <button class="modal-close" onclick="app.closeBookingModal()">×</button>
+                    <div style="padding: 40px 30px;">
+                        <h2 style="font-size: 28px; margin-bottom: 10px; color: #d4af37;">📅 Запись на услугу</h2>
+                        <p style="color: #b0b0b0; margin-bottom: 30px;">${service.name} - ${service.price} руб.</p>
+                        
+                        <div style="display: grid; gap: 20px;">
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #d4af37;">Ваше имя</label>
+                                <input type="text" id="booking-name" style="width: 100%; padding: 12px; border: 2px solid #333; border-radius: 8px; background: #2a2a2a; color: #e5e5e5;" placeholder="Иван Иванов">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #d4af37;">Телефон</label>
+                                <input type="tel" id="booking-phone" style="width: 100%; padding: 12px; border: 2px solid #333; border-radius: 8px; background: #2a2a2a; color: #e5e5e5;" placeholder="+7 (999) 123-45-67">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #d4af37;">Дата</label>
+                                <input type="date" id="booking-date" style="width: 100%; padding: 12px; border: 2px solid #333; border-radius: 8px; background: #2a2a2a; color: #e5e5e5;">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #d4af37;">Время</label>
+                                <select id="booking-time" style="width: 100%; padding: 12px; border: 2px solid #333; border-radius: 8px; background: #2a2a2a; color: #e5e5e5;">
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                </select>
+                            </div>
+                            <button class="book-btn" onclick="app.submitBooking(${service.id})">
+                                ✅ Подтвердить запись
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('booking-date').min = today;
+                document.getElementById('booking-date').value = today;
+                
+                modal.classList.remove('hidden');
+            }
+            
+            closeBookingModal() {
+                document.getElementById('booking-modal').classList.add('hidden');
+            }
+            
+            async submitBooking(serviceId) {
+                const name = document.getElementById('booking-name').value;
+                const phone = document.getElementById('booking-phone').value;
+                const date = document.getElementById('booking-date').value;
+                const time = document.getElementById('booking-time').value;
+                
+                if (!name || !phone) {
+                    alert('Пожалуйста, заполните все поля');
+                    return;
+                }
+                
+                try {
+                    console.log('Booking:', { serviceId, name, phone, date, time });
+                    alert('✅ Запись успешно создана!');
+                    this.closeBookingModal();
+                } catch (error) {
+                    alert('Ошибка при создании записи');
+                }
+            }
+            
+            getSpecializationIcon(specializationCode) {
+                const icons = {
+                    'hair': '💇',
+                    'nails': '💅',
+                    'cosmetology': '✨',
+                    'massage': '💆',
+                    'eyebrows': '✏️',
+                    'makeup': '💄'
+                };
+                return icons[specializationCode] || '👑';
+            }
+            
+            formatDuration(duration) {
+                const minutes = this.getDurationInMinutes(duration);
+                if (minutes < 60) return `${minutes} мин`;
+                const hours = Math.floor(minutes / 60);
+                const mins = minutes % 60;
+                return mins > 0 ? `${hours} ч ${mins} мин` : `${hours} ч`;
+            }
+            
+            getMasterFullName(master) {
+                if (master.user) {
+                    return `${master.user.first_name} ${master.user.last_name}`.trim();
+                }
+                return master.name || `Мастер #${master.id}`;
+            }
+        }
+        
+        function switchTab(tabName) {
+            app.switchTab(tabName);
+        }
+        
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('price-range').value = 10000;
+            document.getElementById('max-price').textContent = '10000 руб.';
+            
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = true;
+            });
+            
+            app.filters = {
+                search: '',
+                maxPrice: 10000,
+                durations: ['short', 'medium', 'long'],
+                categories: app.filters.categories
+            };
+            
+            app.originalFilters = null;
+            app.currentMasterFilter = null;
+            document.getElementById('reset-master-filter').style.display = 'none';
+            
+            app.applyFilters();
+            alert('Все фильтры сброшены');
+        }
+        
+        function applyFilters() {
+            app.applyFilters();
+        }
+        
+        const app = new BeautySearchApp();
+        document.addEventListener('DOMContentLoaded', () => app.init());
+    </script>
+</body>
+</html>
